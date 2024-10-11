@@ -1,0 +1,8 @@
+.container {
+    width: 80%;
+    height: 80%;
+    border-radius: 8px;
+    border: 1px solid black;
+    background-color: rgb(255, 235, 210);
+    overflow: hidden;
+}

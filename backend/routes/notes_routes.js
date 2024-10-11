@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     content: req.body.content,
   });
   await note.save();
-  res.status(201).json(note);
+  res.status(200).json(note);
 });
 
 export default router;

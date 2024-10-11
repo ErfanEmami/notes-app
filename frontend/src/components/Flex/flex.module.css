@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    position: relative;
+}
+
+.center {
+    align-items: center;
+    justify-content: center;
+}
+
+.hcenter {
+    justify-content: center;
+}
+
+.vcenter {
+    align-items: center;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.h100 {
+    height: 100%;
+}
+
+.end {
+    justify-content: flex-end;
+}
