@@ -60,7 +60,7 @@ router.post('/logout', (req, res) => {
 
 // Check if the user is authenticated
 router.get('/check-auth', (req, res) => {
-  if (req.session && req.session.userId) {
+  if (req.session?.userId) {
     // User is authenticated
     res.status(200).json({ authenticated: true, userId: req.session.userId });
   } else {

@@ -1,31 +1,25 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
+
 import Flex from '../Flex/flex';
-import withRequest from '../HOCS/with_request';
-import { useAppContext } from '../../context/app_context';
+import useAuth from '../../hooks/useAuth';
 
-const REGISTER_ENDPOINT = `${process.env.REACT_APP_API_URL}/auth/register`
-const LOGIN_ENDPOINT = `${process.env.REACT_APP_API_URL}/auth/login`
-
-const Authenticate = ({makePostRequest}) => {
+const Authenticate = () => {
     const [register_username, setRegisterUsername] = useState(null)
     const [register_password, setRegisterPassword] = useState(null)
   
     const [login_username, setLoginUsername] = useState(null)
     const [login_password, setLoginPassword] = useState(null)
 
-    const { setAuthenticated } = useAppContext()
+    const { register, login } = useAuth()
 
     const handleRegister = async (e) => {
       e.preventDefault();
-      const res = await makePostRequest(REGISTER_ENDPOINT, { username: register_username, password: register_password })
-      if (res?.status === 200) setAuthenticated(true) 
+      register(register_username, register_password)
     }
 
     const handleLogin = async (e) => {
       e.preventDefault();
-      const res = await makePostRequest(LOGIN_ENDPOINT, { username: login_username, password: login_password })
-      if (res?.status === 200) setAuthenticated(true) 
+      login(login_username, login_password)
     }
   
     return (
@@ -65,4 +59,4 @@ const Authenticate = ({makePostRequest}) => {
     )
   }
 
-  export default withRequest(Authenticate)
+  export default Authenticate

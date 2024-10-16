@@ -20,7 +20,8 @@ router.post('/', async (req, res) => {
     content: req.body.content,
   });
   await note.save();
-  res.status(200).json(note);
+  const notes = await Note.find({ userId: req.session.userId });
+  res.status(200).json(notes);
 });
 
 export default router;
