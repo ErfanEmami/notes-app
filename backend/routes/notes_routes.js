@@ -9,8 +9,13 @@ router.use(authMiddleware);
 
 // Get all notes for the logged-in user
 router.get('/', async (req, res) => {
-  const notes = await Note.find({ userId: req.session.user._id });
-  res.status(200).json(notes);
+  try {
+    const notes = await Note.find({ userId: req.session.user._id });
+    res.status(200).json(notes);
+  } catch (e) {
+    console.error('Error getting notes:', e.message);
+    res.status(500).json({ message: e.message });
+  }
 });
 
 // Create a new note
@@ -19,9 +24,15 @@ router.post('/', async (req, res) => {
     userId: req.session.user._id,
     content: req.body.content,
   });
-  await note.save();
-  const notes = await Note.find({ userId: req.session.user._id });
-  res.status(200).json(notes);
+
+  try {
+    await note.save();
+    const notes = await Note.find({ userId: req.session.user._id });
+    res.status(200).json(notes);
+} catch (e) {
+    console.error('Error adding note:', e.message);
+    res.status(400).json({ message: e.message });
+  }
 });
 
 router.delete('/:id', async (req, res) => {
@@ -36,9 +47,9 @@ router.delete('/:id', async (req, res) => {
 
     const notes = await Note.find({ userId: req.session.user._id });
     res.status(200).json(notes);
-  } catch (error) {
-    console.error('Error deleting note:', error);
-    res.status(500).json({ message: 'Server error while deleting note' });
+  } catch (e) {
+    console.error('Error deleting note:', e.message);
+    res.status(500).json({ message: e.message });
   }
 });
 
@@ -58,9 +69,9 @@ router.put('/:id/complete', async (req, res) => {
 
     const notes = await Note.find({ userId: req.session.user._id });
     res.status(200).json(notes);
-  } catch (error) {
-    console.error('Error updating note:', error);
-    res.status(500).json({ message: 'Server error while updating note' });
+  } catch (e) {
+    console.error('Error deleting note:', e.message);
+    res.status(500).json({ message: e.message });
   }
 });
 

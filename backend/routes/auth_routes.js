@@ -12,7 +12,7 @@ router.post('/register', async (req, res) => {
     // Check if the user already exists
     const existing_user = await User.findOne({ username });
     if (existing_user) {
-      return res.status(400).json({ success: false, error: 'User already exists' });
+      return res.status(400).json({ error: 'User already exists' });
     }
 
     // Hash the password and save the new user
@@ -22,9 +22,9 @@ router.post('/register', async (req, res) => {
     
     // Create a session for the new user
     req.session.user = new_user;
-    res.status(200).json({ success: true, user: req.session.user, error: null });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error });
+    res.status(200).json({ user: req.session.user, error: null });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 });
 
@@ -35,26 +35,26 @@ router.post('/login', async (req, res) => {
   try {
     // Find user by username
     const user = await User.findOne({ username });
-    if (!user) return res.status(400).json({ success: false, error: 'Invalid username or password' });
+    if (!user) return res.status(400).json({ error: 'Invalid username or password' });
 
     // Check if the password is valid
     const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) return res.status(400).json({ success: false, error: 'Invalid username or password' });
+    if (!isValidPassword) return res.status(400).json({ error: 'Invalid username or password' });
 
     // Create a session for the user
     req.session.user = user;
-    res.status(200).json({ success: true, user: req.session.user, error: null });
+    res.status(200).json({ user: req.session.user, error: null });
   } catch (err) {
-    res.status(500).json({ success: false, error: 'Error logging in' });
+    res.status(500).json({ error: 'Error logging in' });
   }
 });
 
 // Logout route
 router.post('/logout', (req, res) => {
   req.session.destroy((err) => {
-    if (err) return res.status(500).json({ success: false, error: 'Error logging out' });
+    if (err) return res.status(500).json({ error: 'Error logging out' });
     res.clearCookie('connect.sid');  // Clear the session cookie
-    res.status(200).json({ success: true, error: null });
+    res.status(200).json({ error: null });
   });
 });
 
