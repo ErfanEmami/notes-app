@@ -10,19 +10,19 @@ router.post('/register', async (req, res) => {
   
   try {
     // Check if the user already exists
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
+    const existing_user = await User.findOne({ username });
+    if (existing_user) {
       return res.status(400).json({ success: false, error: 'User already exists' });
     }
 
     // Hash the password and save the new user
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, password: hashedPassword });
-    await newUser.save();
+    const hashed_password = await bcrypt.hash(password, 10);
+    const new_user = new User({ username, password: hashed_password });
+    await new_user.save();
     
     // Create a session for the new user
-    req.session.userId = newUser._id;
-    res.status(200).json({ success: true, error: null });
+    req.session.user = new_user;
+    res.status(200).json({ success: true, user: req.session.user, error: null });
   } catch (error) {
     res.status(500).json({ success: false, error: error });
   }
@@ -42,8 +42,8 @@ router.post('/login', async (req, res) => {
     if (!isValidPassword) return res.status(400).json({ success: false, error: 'Invalid username or password' });
 
     // Create a session for the user
-    req.session.userId = user._id;
-    res.status(200).json({ success: true, error: null });
+    req.session.user = user;
+    res.status(200).json({ success: true, user: req.session.user, error: null });
   } catch (err) {
     res.status(500).json({ success: false, error: 'Error logging in' });
   }
@@ -60,13 +60,7 @@ router.post('/logout', (req, res) => {
 
 // Check if the user is authenticated
 router.get('/check-auth', (req, res) => {
-  if (req.session?.userId) {
-    // User is authenticated
-    res.status(200).json({ authenticated: true, userId: req.session.userId });
-  } else {
-    // User is not authenticated
-    res.status(200).json({ authenticated: false });
-  }
+    res.status(200).json({ user: req.session?.user });
 });
 
 export default router;

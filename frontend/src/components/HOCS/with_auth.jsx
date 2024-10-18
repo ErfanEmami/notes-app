@@ -6,7 +6,7 @@ import Authenticate from "../Authenticate/authenticate";
 
 const withAuth = (Component) => {
   return () => {
-  const { authenticated } = useAppContext() 
+  const { user } = useAppContext() 
   const { checkAuthStatus } = useAuth()
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const withAuth = (Component) => {
     }, [])
 
     return (
-      authenticated
+      user
        ?  <Component />       
        :  <Authenticate />
     )

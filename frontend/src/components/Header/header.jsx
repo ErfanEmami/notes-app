@@ -1,18 +1,23 @@
-import React from "react"
+import React, { useMemo } from "react"
 
 import Flex from "../Flex/flex"
 import { useAppContext } from '../../context/app_context';
 
-const Header = ({ todo_count, todo_done }) => {
-  const { setLoading, setError, error } = useAppContext()
+const Header = ({ notes }) => {
+  const { user } = useAppContext()
+
+  // Memoize the calculation of completed_notes
+  const completed_notes = useMemo(() => {
+    return notes.filter(o => o.complete);
+  }, [notes]); // only recalculate when notes change
   
   return (
     <Flex vcenter end style={{justifyContent: "space-between", padding: "20px", background: "rgb(255, 228, 196)", borderBottom: "1px solid black"}}>
-      <div></div>
+      <div>{user.username}</div>
       <div>
-        <span><b>{todo_done} </b></span>
+        <span><b>{completed_notes.length} </b></span>
         <span>/</span>
-        <span> {todo_count} todos completed</span>
+        <span> {notes.length} todos completed</span>
       </div>
     </Flex>
   )

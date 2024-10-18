@@ -9,7 +9,7 @@ const COMPLETE_NOTE_ENDPOINT = `${process.env.REACT_APP_API_URL}/notes/complete`
 
 const withNotes = (Component) => {
   return (props) => {
-    const [notes, setNotes] = useState(null)
+    const [notes, setNotes] = useState([])
     const { 
       makeGetRequest, 
       makePostRequest, 

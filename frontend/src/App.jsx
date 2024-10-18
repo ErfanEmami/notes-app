@@ -13,7 +13,7 @@ import withAuth from "./components/HOCS/with_auth";
 const AppContent = ({notes, handleAddNote, handleDeleteNote, handleCompleteNote}) => {
     return (
       <Page>
-        <Header todo_count={2} todo_done={2}/>
+        <Header notes={notes} />
         <Flex h100>
           <Flex column style={{flex: "2", borderRight: "1px solid black", overflowY: "scroll"}}>
             <NotesPanel 

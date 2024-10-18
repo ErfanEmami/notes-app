@@ -7,12 +7,12 @@ const AppContext = createContext();
 export const AppContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false); 
   const [error, setError] = useState(null); 
-  const [authenticated, setAuthenticated] = useState(null); 
+  const [user, setUser] = useState(null); 
 
   const value = {
     loading, setLoading,
     error, setError,
-    authenticated, setAuthenticated,
+    user, setUser,
   }
 
   return (
