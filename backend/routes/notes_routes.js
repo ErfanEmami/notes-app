@@ -42,9 +42,9 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.put('/complete', async (req, res) => {
+router.put('/:id/complete', async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
 
     const updated_note = await Note.findByIdAndUpdate(
       id, 

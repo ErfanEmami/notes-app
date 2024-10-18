@@ -5,7 +5,7 @@ import useRequest from '../../hooks/useRequest';
 const GET_NOTES_ENDPOINT = `${process.env.REACT_APP_API_URL}/notes`
 const ADD_NOTE_ENDPOINT = `${process.env.REACT_APP_API_URL}/notes`
 const DELETE_NOTE_ENDPOINT = `${process.env.REACT_APP_API_URL}/notes`
-const COMPLETE_NOTE_ENDPOINT = `${process.env.REACT_APP_API_URL}/notes/complete`
+const COMPLETE_NOTE_ENDPOINT = `${process.env.REACT_APP_API_URL}/notes`
 
 const withNotes = (Component) => {
   return (props) => {
@@ -37,7 +37,7 @@ const withNotes = (Component) => {
     }
 
     const handleCompleteNote = async (id) => {
-      const res = await makePutRequest(`${COMPLETE_NOTE_ENDPOINT}`, { id })
+      const res = await makePutRequest(`${COMPLETE_NOTE_ENDPOINT}/${id}/complete`)
       if(res.status === 200) setNotes(res.data)
     }
 
