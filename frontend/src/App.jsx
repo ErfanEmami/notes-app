@@ -10,16 +10,22 @@ import withNotes from "./components/HOCS/with_notes";
 import withRequestUI from "./components/HOCS/with_request_ui";
 import withAuth from "./components/HOCS/with_auth";
 
-const AppContent = ({notes, handleAddNote}) => {
+const AppContent = ({notes, handleAddNote, handleDeleteNote, handleCompleteNote}) => {
     return (
       <Page>
         <Header todo_count={2} todo_done={2}/>
         <Flex h100>
-          <Flex column style={{flex: "2", borderRight: "1px solid black"}}>
-            <NotesPanel notes={notes} />
+          <Flex column style={{flex: "2", borderRight: "1px solid black", overflowY: "scroll"}}>
+            <NotesPanel 
+              notes={notes} 
+              handleDeleteNote={handleDeleteNote} 
+              handleCompleteNote={handleCompleteNote} 
+            />
           </Flex>
           <Flex column style={{flex: "1"}}>
-            <ControlPanel handleAddNote={handleAddNote} />
+            <ControlPanel 
+              handleAddNote={handleAddNote} 
+            />
           </Flex>
         </Flex>
       </Page>

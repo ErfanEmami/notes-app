@@ -1,12 +1,18 @@
 import React from "react"
 
 import Flex from "../Flex/flex";
+import Note from "../Note/note";
 
-const NotesPanel = ({notes}) => {
+const NotesPanel = ({notes, handleDeleteNote, handleCompleteNote}) => {
   return (
     <Flex column gap="10px">
       {notes?.map(note => (
-        <div>{note.content}</div>
+        <Note 
+          key={note._id}
+          note={note}
+          onDelete={handleDeleteNote}
+          onComplete={handleCompleteNote}
+        />
       ))}
     </Flex>
   )

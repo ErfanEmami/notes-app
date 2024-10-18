@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 // Enable CORS to allow requests from the frontend
 app.use(cors({
   origin: 'http://localhost:3000',  // Frontend origin (React app)
-  credentials: true  // Allow session cookies to be sent with requests
+  credentials: true,  // Allow session cookies to be sent with requests
 }));
 
 // Session configuration with MongoStore
